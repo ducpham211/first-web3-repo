@@ -1,48 +1,72 @@
-📝 Decentralized Message Board (DApp) - Research Milestone #1
-Dự án này là bước nghiên cứu nền tảng về ứng dụng phi tập trung (dApp), thực hiện trong khuôn khổ đồ án môn học IE213. Hệ thống cho phép người dùng tương tác với Smart Contract trên mạng Ethereum Sepolia để lưu trữ và hiển thị tin nhắn một cách minh bạch.
+# ��� Decentralized Message Board (DApp) — Research Milestone #1
 
-🚀 Tính năng nổi bật
+Dự án này là bước nghiên cứu nền tảng về ứng dụng phi tập trung (dApp), thực hiện trong khuôn khổ đồ án môn học **IE213**. Hệ thống cho phép người dùng tương tác với Smart Contract trên mạng **Ethereum Sepolia** để lưu trữ và hiển thị tin nhắn một cách minh bạch.
 
-Kết nối ví Web3: Tích hợp MetaMask để xác thực người dùng thông qua địa chỉ ví.
+## Mục lục
 
-Tương tác On-chain: Đọc dữ liệu trực tiếp từ Smart Contract và gửi giao dịch thay đổi trạng thái chuỗi.
+- [Tổng quan](#tổng-quan)
+- [Tính năng](#tính-năng)
+- [Công nghệ](#công-nghệ)
+- [Kiến trúc hệ thống](#kiến-trúc-hệ-thống)
+- [Thông tin Smart Contract](#thông-tin-smart-contract)
+- [Cài đặt và chạy thử](#cài-đặt-và-chạy-thử)
 
-Quản lý trạng thái giao dịch: Hiển thị rõ ràng các giai đoạn: Đang chờ xác nhận (Pending), Thành công và Thất bại.
+## Tổng quan
 
-Tối ưu trải nghiệm (UX): Xử lý các tình huống từ chối giao dịch, đổi mạng hoặc lỗi kết nối RPC.
+Ứng dụng cho phép người dùng gửi và xem tin nhắn lưu trữ on-chain, đồng thời quản lý trạng thái giao dịch một cách rõ ràng và an toàn.
 
-🛠 Công nghệ sử dụng
-Solidity, Remix IDE, React.js, Ethers.js.
+## Tính năng
 
-🏗 Kiến trúc hệ thống
-Dự án tuân thủ mô hình phân tách dữ liệu On-chain và Off-chain để tối ưu hiệu năng:
+- **Kết nối ví Web3:** Tích hợp MetaMask để xác thực người dùng thông qua địa chỉ ví.
+- **Tương tác On-chain:** Đọc dữ liệu trực tiếp từ Smart Contract và gửi giao dịch thay đổi trạng thái trên blockchain.
+- **Quản lý trạng thái giao dịch:** Hiển thị rõ các giai đoạn: Đang chờ xác nhận (Pending), Thành công, Thất bại.
+- **Tối ưu trải nghiệm (UX):** Xử lý các tình huống như từ chối giao dịch, đổi mạng hoặc lỗi kết nối RPC.
 
-On-chain: Nội dung tin nhắn, địa chỉ người gửi và dấu mốc thời gian (timestamp) được lưu trữ vĩnh viễn trên Blockchain.
+## Công nghệ
 
-Off-chain: Giao diện người dùng và logic xử lý trạng thái giao dịch được triển khai tại Frontend.
-📑 Thông tin Smart Contract
+- Solidity
+- Remix IDE
+- React.js
+- Ethers.js
 
-Mạng: Ethereum Sepolia Testnet.
+## Kiến trúc hệ thống
 
-Địa chỉ Contract: 0xF3D27FB817dCD549C885dA7ff869f9B5f36dAE5b.
+Dự án tuân thủ mô hình tách biệt dữ liệu On-chain và Off-chain để tối ưu hiệu năng:
 
-Trình khám phá: Xem trên Blockscout
+- **On-chain:** Nội dung tin nhắn, địa chỉ người gửi và dấu mốc thời gian (timestamp) được lưu trữ vĩnh viễn trên blockchain.
+- **Off-chain:** Giao diện người dùng và logic xử lý trạng thái giao dịch được triển khai tại frontend.
 
-⚙️ Hướng dẫn cài đặt và chạy thử
-Để chạy lại dự án này trên môi trường local, hãy làm theo các bước sau:
+## Thông tin Smart Contract
 
-Clone repository:
+- **Mạng:** Ethereum Sepolia Testnet
+- **Địa chỉ Contract:** 0xF3D27FB817dCD549C885dA7ff869f9B5f36dAE5b
+- **Trình khám phá:** Xem trên Blockscout
 
-Bash
+## Cài đặt và chạy thử
+
+Để chạy dự án trên môi trường local, làm theo các bước sau:
+
+1. Clone repository
+
+```bash
 git clone https://github.com/ducpham211/first-web3-repo.git
 cd your-repo-name/frontend
-Cài đặt thư viện:
+```
 
-Bash
+2. Cài đặt phụ thuộc
+
+```bash
 npm install
-Chạy dự án:
+```
 
-Bash
+3. Chạy dự án
+
+```bash
 npm run dev
+```
 
-Sử dụng: Mở trình duyệt tại localhost:5173, đảm bảo MetaMask đã chuyển sang mạng Sepolia.
+4. Mở trình duyệt tại `http://localhost:5173` và đảm bảo MetaMask đã chuyển sang mạng **Sepolia**.
+
+---
+
+Nếu cần thêm hướng dẫn hoặc muốn tôi cập nhật README bằng tiếng Anh, cho tôi biết nhé.
