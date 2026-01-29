@@ -1,4 +1,4 @@
-# ��� Decentralized Message Board (DApp) — Research Milestone #1
+# Decentralized Message Board (DApp)
 
 Dự án này là bước nghiên cứu nền tảng về ứng dụng phi tập trung (dApp), thực hiện trong khuôn khổ đồ án môn học **IE213**. Hệ thống cho phép người dùng tương tác với Smart Contract trên mạng **Ethereum Sepolia** để lưu trữ và hiển thị tin nhắn một cách minh bạch.
 
@@ -68,5 +68,3 @@ npm run dev
 4. Mở trình duyệt tại `http://localhost:5173` và đảm bảo MetaMask đã chuyển sang mạng **Sepolia**.
 
 ---
-
-Nếu cần thêm hướng dẫn hoặc muốn tôi cập nhật README bằng tiếng Anh, cho tôi biết nhé.
