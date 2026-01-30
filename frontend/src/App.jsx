@@ -1,116 +1,54 @@
-import { useState, useEffect } from "react";
-import { ethers } from "ethers";
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from "./constants/contract";
+import { useMessageBoard } from "./features/message-board/hooks/useMessageBoard";
+import { useEffect } from "react";
 
 function App() {
-  const [account, setAccount] = useState("");
-  const [message, setMessage] = useState("");
-  const [currentMessage, setCurrentMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
-
-  // 1. Yêu cầu kết nối ví MetaMask [cite: 19]
-  const connectWallet = async () => {
-    if (window.ethereum) {
-      try {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        setAccount(accounts[0]);
-        setStatus("Đã kết nối ví thành công!");
-      } catch (error) {
-        setStatus("Người dùng từ chối kết nối."); // Xử lý lỗi phổ biến [cite: 23]
-        console.error("Lỗi kết nối ví:", error);
-      }
-    } else {
-      alert("Vui lòng cài đặt MetaMask!");
-    }
-  };
-
-  // 2. Đọc dữ liệu từ Smart Contract [cite: 20]
-  const fetchMessage = async () => {
-    if (!window.ethereum) return;
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const contract = new ethers.Contract(
-      CONTRACT_ADDRESS,
-      CONTRACT_ABI,
-      provider,
-    );
-
-    try {
-      const data = await contract.getLastMessage();
-      setCurrentMessage(data[1]); // Lấy nội dung message
-    } catch (err) {
-      console.error("Lỗi khi đọc dữ liệu:", err);
-    }
-  };
-
-  // 3. Gửi giao dịch lên Blockchain [cite: 21]
-  const sendMessage = async () => {
-    if (!message || !account) return;
-    setLoading(true);
-    setStatus("Đang chờ xác nhận từ ví...");
-
-    try {
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        CONTRACT_ABI,
-        signer,
-      );
-
-      const tx = await contract.postMessage(message);
-      setStatus("Giao dịch đã gửi. Đang chờ xác nhận trên mạng (Pending)..."); // [cite: 22]
-
-      await tx.wait(); // Chờ đào block
-      setStatus("Giao dịch thành công!");
-      fetchMessage(); // Cập nhật lại UI
-    } catch (error) {
-      // Xử lý các tình huống lỗi RPC hoặc người dùng từ chối [cite: 23]
-      setStatus("Giao dịch thất bại: " + (error.reason || "Lỗi mạng/Từ chối"));
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data, loading, handleSend, handleLike, fetchAll } = useMessageBoard();
 
   useEffect(() => {
-    fetchMessage();
+    fetchAll();
   }, []);
 
   return (
-    <div style={{ padding: "50px", fontFamily: "Arial" }}>
-      <h1>IE213 - Blockchain Project</h1>
-      <button onClick={connectWallet}>
-        {account
-          ? `Ví: ${account.substring(0, 6)}...${account.substring(38)}`
-          : "Kết nối MetaMask"}
-      </button>
+    <div style={{ padding: "2rem", maxWidth: "600px", margin: "auto" }}>
+      <header>
+        <h1>DApp Message Board v2</h1>
+      </header>
 
-      <div style={{ marginTop: "20px" }}>
-        <h3>Tin nhắn On-chain hiện tại:</h3>
-        <p style={{ fontSize: "20px", color: "blue" }}>
-          {currentMessage || "Chưa có dữ liệu"}
-        </p>
-      </div>
+      <main>
+        {/* Phần hiển thị tin nhắn On-chain */}
+        <section
+          style={{
+            border: "1px solid #444",
+            padding: "1rem",
+            borderRadius: "8px",
+          }}
+        >
+          <p style={{ fontStyle: "italic" }}>
+            "{data.content || "Đang tải..."}"
+          </p>
+          <small>Người gửi: {data.sender}</small>
 
-      <hr />
+          <div style={{ marginTop: "1rem" }}>
+            <button onClick={handleLike}>
+              ❤️ {data.likes} Likes (Off-chain)
+            </button>
+          </div>
+        </section>
 
-      <input
-        type="text"
-        placeholder="Nhập tin nhắn mới..."
-        onChange={(e) => setMessage(e.target.value)}
-        disabled={loading}
-      />
-      <button onClick={sendMessage} disabled={loading}>
-        {loading ? "Đang xử lý..." : "Gửi lên Blockchain"}
-      </button>
-
-      <p>
-        <strong>Trạng thái:</strong> {status}
-      </p>
+        {/* Phần tương tác gửi tin */}
+        <section style={{ marginTop: "2rem" }}>
+          <input id="msgInput" placeholder="Nhập tin nhắn On-chain..." />
+          <button
+            disabled={loading}
+            onClick={() =>
+              handleSend(document.getElementById("msgInput").value)
+            }
+          >
+            {loading ? "Đang xác nhận..." : "Gửi lên Blockchain"}
+          </button>
+        </section>
+      </main>
     </div>
   );
 }
-
 export default App;
